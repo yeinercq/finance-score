@@ -4,7 +4,7 @@ class CreateAccounts < ActiveRecord::Migration[7.2]
       t.integer :number
       t.string :name
       t.integer :nature
-      t.integer :type
+      t.integer :account_type
 
       t.timestamps
     end

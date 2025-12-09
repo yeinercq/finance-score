@@ -18,7 +18,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_18_012355) do
     t.integer "number"
     t.string "name"
     t.integer "nature"
-    t.integer "type"
+    t.integer "account_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
