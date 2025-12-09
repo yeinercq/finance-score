@@ -256,6 +256,9 @@ GEM
       rubocop-rails (>= 2.30)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
+    simple_form (5.1.0)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
       logger
@@ -314,6 +317,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 7.2.3)
   rubocop-rails-omakase
+  simple_form (~> 5.1.0)
   sprockets-rails
   stimulus-rails
   turbo-rails

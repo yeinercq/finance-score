@@ -1,0 +1,8 @@
+<main class="container">
+  <%= link_to sanitize("&larr; Atrás"), accounts_path %>
+  <div class="header">
+    <h1>Editar cuenta</h1>
+  </div>
+
+  <%= render "form", account: @account %>
+</main>

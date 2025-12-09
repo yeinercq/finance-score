@@ -1,0 +1,9 @@
+<main class="container">
+  <div class="header">
+    <h1>Cuentas</h1>
+    <%= link_to "Nueva cuenta", new_account_path, class: "btn btn--primary"  %>
+  </div>
+
+  <%= render @accounts %>
+
+</main>

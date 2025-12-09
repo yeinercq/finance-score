@@ -1,0 +1,7 @@
+<div class="accont">
+  <%= link_to account.name, account_path(account) %>
+  <div class="account__actions">
+    <%= button_to "Eliminar", account_path(accont), method: :delete, class: "btn btn--light" %>
+    <%= link_to "Editar", edit_account_path(accont), class: "btn btn--light" %>
+  </div>
+</div>  

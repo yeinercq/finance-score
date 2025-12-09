@@ -1,0 +1,14 @@
+<%= simple_form_for account, html: { class: "account form" } do |f| %>
+  <% if account.errors.any? %>
+    <div class="error-message">
+      <%= account.errors.full_messages.to_sentence.capitalize %>
+    </div>
+  <% end %>
+
+  <%= f.input :number, input_html: { autofocus: true } %>
+  <%= f.input :name %>
+  <%= f.input :nature, collection: Account.natures %>
+  <%= f.input :account_type, collection: Account.account_types %>
+  
+  <%= f.submit "Aceptar", class: "btn btn--secondary" %>
+<% end %>
