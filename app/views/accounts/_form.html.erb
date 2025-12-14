@@ -7,8 +7,8 @@
 
   <%= f.input :number, input_html: { autofocus: true } %>
   <%= f.input :name %>
-  <%= f.input :nature, collection: Account.natures %>
-  <%= f.input :account_type, collection: Account.account_types %>
+  <%= f.input :nature, collection: Account.natures.map { |name, value| [name, name] } %>
+  <%= f.input :account_type, collection: Account.account_types.map { |name, value| [name, name] } %>
   
   <%= f.submit class: "btn btn--secondary" %>
 <% end %>
