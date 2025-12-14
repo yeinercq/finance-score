@@ -8,8 +8,23 @@ en:
       # You can uncomment the line below if you need to overwrite the whole required html.
       # When using html, text and mark won't be used.
       # html: '<abbr title="required">*</abbr>'
+    placeholders:
+      account:
+        name: Name of your account
+        number: Number of your account
+    labels:
+      account:
+        name: Name
+        number: Number
+        nature: Nature
+        account_type: Type
     error_notification:
       default_message: "Please review the problems below:"
+  helpers:
+    submit:
+      account:
+        create: Create account
+        update: Updade account
     # Examples
     # labels:
     #   defaults:
