@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_18_012355) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_13_010833) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,5 +21,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_18_012355) do
     t.integer "account_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "mayor_account_id"
+    t.integer "level", null: false
+    t.index ["mayor_account_id"], name: "index_accounts_on_mayor_account_id"
   end
+
+  add_foreign_key "accounts", "accounts", column: "mayor_account_id"
 end

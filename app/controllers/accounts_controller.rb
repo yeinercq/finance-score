@@ -2,7 +2,7 @@ class AccountsController < ApplicationController
   before_action :set_accout, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @accounts = Account.all
+    @accounts = Account.all.ordered
   end
 
   def show

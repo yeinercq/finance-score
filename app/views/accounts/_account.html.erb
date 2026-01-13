@@ -1,5 +1,5 @@
 <div class="account">
-  <%= link_to account.name, account_path(account) %>
+  <%= link_to "#{account.number} - #{account.name}", account_path(account) %>
   <div class="account__actions">
     <%= button_to "Eliminar", account_path(account), method: :delete, class: "btn btn--light" %>
     <%= link_to "Editar", edit_account_path(account), class: "btn btn--light" %>

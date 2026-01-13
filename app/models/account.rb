@@ -11,13 +11,18 @@
 #  updated_at   :datetime         not null
 #
 class Account < ApplicationRecord
+  scope :ordered, -> { order("id ASC") }
+
   validates :number, :name, :account_type, :nature, presence: true
   validates :number, uniqueness: true, comparison: { greater_than: 0 }
   validates :name, uniqueness: { case_sensitive: false }
   validate :correct_caracter_number, if: :not_level_1?
 
-  before_create :squish_name
+  before_create :squish_name, :set_account_level
   before_create :create_mayor_account, if: :is_movement_account?
+
+  belongs_to :mayor_account, class_name: "Account", foreign_key: "mayor_account_id", optional: true
+  has_many :mayoriced_accounts, class_name: "Account", foreign_key: "mayor_account_id"
 
   enum :nature, { debit: 1, credit: 2 }
   enum :account_type, { mayor: 1, movement: 2 }
@@ -40,6 +45,10 @@ class Account < ApplicationRecord
 
   def squish_name
     self.name = name.squish
+  end
+
+  def set_account_level
+    self.level ||= Account.get_account_level(number)
   end
 
   # V
