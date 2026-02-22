@@ -24,9 +24,13 @@ class CreateMayorAccountService
 
     levels.reverse.each do |level|
       account_length = get_account_length(level)
+      number = @account.number.to_s[0..account_length - 1].to_i
+
+      next if Account.exists?(number: number, account_type: 1)
+
       params = mayor_account_params_base.merge({
         name: "#{name_base} level #{level}",
-        number: @account.number.to_s[0..account_length - 1].to_i
+        number: number
       })
       Account.create!(params)
     end
