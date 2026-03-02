@@ -30,7 +30,8 @@ class CreateMayorAccountService
 
       params = mayor_account_params_base.merge({
         name: "#{name_base} level #{level}",
-        number: number
+        number: number,
+        level: level
       })
       Account.create!(params)
     end
