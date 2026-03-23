@@ -26,14 +26,22 @@ class CreateMayorAccountService
       account_length = get_account_length(level)
       number = @account.number.to_s[0..account_length - 1].to_i
 
-      next if Account.exists?(number: number, account_type: 1)
-
-      params = mayor_account_params_base.merge({
-        name: "#{name_base} level #{level}",
-        number: number,
-        level: level
-      })
-      Account.create!(params)
+      if Account.exists?(number: number, account_type: 1)
+        next
+      else
+        params = mayor_account_params_base.merge({
+          name: "#{name_base} level #{level}",
+          number: number,
+          level: level
+        })
+        if level == 1
+          Account.create!(params)
+        else
+          mayor_account_length = get_account_length(level - 1)
+          mayor_account = Account.find_by(number: number.to_s[0..mayor_account_length - 1].to_i, account_type: 1)
+          mayor_account.mayoriced_accounts.create!(params)
+        end
+      end
     end
   end
 

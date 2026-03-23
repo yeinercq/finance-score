@@ -2,13 +2,15 @@
 #
 # Table name: accounts
 #
-#  id           :bigint           not null, primary key
-#  number       :integer
-#  name         :string
-#  nature       :integer
-#  account_type :integer
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  id               :bigint           not null, primary key
+#  number           :integer
+#  name             :string
+#  nature           :integer
+#  account_type     :integer
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  mayor_account_id :bigint
+#  level            :integer          not null
 #
 class Account < ApplicationRecord
   scope :ordered, -> { order("id ASC") }
@@ -20,6 +22,7 @@ class Account < ApplicationRecord
 
   before_create :squish_name, :set_account_level
   before_create :create_mayor_account, if: :is_movement_account?
+  after_create :set_mayor_account
 
   belongs_to :mayor_account, class_name: "Account", foreign_key: "mayor_account_id", optional: true
   has_many :mayoriced_accounts, class_name: "Account", foreign_key: "mayor_account_id"
@@ -49,6 +52,16 @@ class Account < ApplicationRecord
 
   def set_account_level
     self.level ||= Account.get_account_level(number)
+  end
+
+  def set_mayor_account
+    level = Account.get_account_level(number)
+    mayor_account_length = Account.get_account_length(level - 1)
+    mayor_account = Account.find_by(number: number.to_s[0..mayor_account_length - 1].to_i, account_type: 1)
+    if mayor_account.present?
+      self.mayor_account = mayor_account
+      save!
+    end
   end
 
   # V
