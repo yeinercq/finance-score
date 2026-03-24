@@ -3,6 +3,8 @@
   <div class="header">
     <h1>New account</h1>
   </div>
-
-  <%= render "form", account: @account %>
+  
+  <%= turbo_frame_tag @account do %>
+    <%= render "form", account: @account %>
+  <% end %>
 </main>

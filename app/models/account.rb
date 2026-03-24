@@ -13,7 +13,7 @@
 #  level            :integer          not null
 #
 class Account < ApplicationRecord
-  scope :ordered, -> { order("id ASC") }
+  scope :ordered, -> { order("id DESC") }
 
   validates :number, :name, :account_type, :nature, presence: true
   validates :number, uniqueness: true, comparison: { greater_than: 0 }

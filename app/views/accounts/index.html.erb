@@ -1,9 +1,13 @@
 <main class="container">
   <div class="header">
     <h1>Accounts</h1>
-    <%= link_to "New Account", new_account_path, class: "btn btn--primary"  %>
+    <%= link_to "New Account", new_account_path, class: "btn btn--primary", data: { turbo_frame: dom_id(Account.new) } %>
   </div>
 
-  <%= render @accounts %>
+  <%= turbo_frame_tag Account.new %>
+  
+  <%= turbo_frame_tag "accounts" do %>
+    <%= render @accounts %>
+  <% end %>
 
 </main>

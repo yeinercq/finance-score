@@ -1,7 +1,9 @@
-<div class="account">
-  <%= link_to "#{account.number} - #{account.name}", account_path(account) %>
-  <div class="account__actions">
-    <%= button_to "Delete", account_path(account), method: :delete, class: "btn btn--light" %>
-    <%= link_to "Edit", edit_account_path(account), class: "btn btn--light" %>
-  </div>
-</div>  
+<%= turbo_frame_tag account do %>
+  <div class="account">
+    <%= link_to "#{account.number} - #{account.name}", account_path(account), data: { turbo_frame: "_top" } %>
+    <div class="account__actions">
+      <%= button_to "Delete", account_path(account), method: :delete, class: "btn btn--light" %>
+      <%= link_to "Edit", edit_account_path(account), class: "btn btn--light" %>
+    </div>
+  </div>  
+<% end %>

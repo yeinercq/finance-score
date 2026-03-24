@@ -21,7 +21,10 @@ class AccountsController < ApplicationController
     end
 
     if @account.save
-      redirect_to accounts_path, notice: "Account was successfully created."
+      respond_to do |format|
+        format.html { redirect_to accounts_path, notice: "Account was successfully created." }
+        format.turbo_stream
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -40,7 +43,10 @@ class AccountsController < ApplicationController
 
   def destroy
     @account.destroy
-    redirect_to accounts_path, notice: "Account was successfully destroyed."
+    respond_to do |format|
+      format.html { redirect_to accounts_path, notice: "Account was successfully destroyed." }
+      format.turbo_stream
+    end
   rescue ActiveRecord::InvalidForeignKey
     redirect_to accounts_path, alert: "Cannot destroy account because it has dependent records."
   end
