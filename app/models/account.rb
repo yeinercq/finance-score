@@ -22,7 +22,7 @@ class Account < ApplicationRecord
 
   before_create :squish_name, :set_account_level
   before_create :create_mayor_account, if: :is_movement_account?
-  after_create :set_mayor_account
+  after_create :set_mayor_account, if: :mayor_id_not_present?
 
   belongs_to :mayor_account, class_name: "Account", foreign_key: "mayor_account_id", optional: true
   has_many :mayoriced_accounts, class_name: "Account", foreign_key: "mayor_account_id"
@@ -38,6 +38,10 @@ class Account < ApplicationRecord
 
   def not_level_1?
     Account.get_account_level(number) > 1
+  end
+
+  def mayor_id_not_present?
+    mayor_account_id.nil?
   end
 
   # Callbacks actions
