@@ -10,5 +10,6 @@
   <%= f.input :nature, collection: Account.natures.map { |name, value| [name.capitalize, name] }, prompt: "Select account nature" %>
   <%= f.input :account_type, collection: Account.account_types.map { |name, value| [name.capitalize, name] }, prompt: "Select account type" %>
   
+  <%= link_to "Cancel", accounts_path, class: "btn btn--light" %>
   <%= f.submit class: "btn btn--secondary" %>
 <% end %>
