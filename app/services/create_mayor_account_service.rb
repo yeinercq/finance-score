@@ -5,6 +5,7 @@ class CreateMayorAccountService
 
   def initialize(account)
     @account = account
+    @logger = CustomLogger.new
   end
 
   def call
@@ -22,11 +23,13 @@ class CreateMayorAccountService
       account_type: 1
     }
 
+    @logger.info "Starting mayor account creation for account number: #{@account.number}"
     levels.reverse.each do |level|
       account_length = get_account_length(level)
       number = @account.number.to_s[0..account_length - 1].to_i
 
       if Account.exists?(number: number, account_type: 1)
+        @logger.info "Mayor account already exists: #{number}"
         next
       else
         params = mayor_account_params_base.merge({
@@ -41,8 +44,11 @@ class CreateMayorAccountService
           mayor_account = Account.find_by(number: number.to_s[0..mayor_account_length - 1].to_i, account_type: 1)
           mayor_account.mayoriced_accounts.create!(params)
         end
+        @logger.info "Mayor account created: #{number}"
       end
     end
+  rescue => e
+    @logger.error "Error occurred while creating mayor account: #{e.message}"
   end
 
   def get_account_level(account_number)
