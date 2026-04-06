@@ -26,9 +26,10 @@ class Account < ApplicationRecord
 
   # Broadcasting stream
   # after_create_commit -> { broadcast_prepend_to "accounts", partial: "accounts/account", locals: { account: self }, target: "accounts" }
-  after_create_commit -> { broadcast_prepend_to "accounts" }
-  after_update_commit -> { broadcast_replace_to "accounts" }
-  after_destroy_commit -> { broadcast_remove_to "accounts" }
+  # after_create_commit -> { broadcast_prepend_later_to "accounts" }
+  # after_update_commit -> { broadcast_replace_later_to "accounts" }
+  # after_destroy_commit -> { broadcast_remove_to "accounts" }
+  broadcasts_to ->(account) { "accounts" }, inserts_by: :prepend
 
   # Associations
   #
