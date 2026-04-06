@@ -24,6 +24,14 @@ class Account < ApplicationRecord
   before_create :create_mayor_account, if: :is_movement_account?
   after_create :set_mayor_account, if: :mayor_id_not_present?
 
+  # Broadcasting stream
+  # after_create_commit -> { broadcast_prepend_to "accounts", partial: "accounts/account", locals: { account: self }, target: "accounts" }
+  after_create_commit -> { broadcast_prepend_to "accounts" }
+  after_update_commit -> { broadcast_replace_to "accounts" }
+  after_destroy_commit -> { broadcast_remove_to "accounts" }
+
+  # Associations
+  #
   belongs_to :mayor_account, class_name: "Account", foreign_key: "mayor_account_id", optional: true
   has_many :mayoriced_accounts, class_name: "Account", foreign_key: "mayor_account_id"
 
