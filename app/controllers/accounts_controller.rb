@@ -23,7 +23,7 @@ class AccountsController < ApplicationController
     if @account.save
       respond_to do |format|
         format.html { redirect_to accounts_path, notice: "Account was successfully created." }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:notice] = "Account was successfully created." }
       end
     else
       render :new, status: :unprocessable_entity
@@ -35,7 +35,10 @@ class AccountsController < ApplicationController
 
   def update
     if @account.update(account_params)
-      redirect_to accounts_path, notice: "Account was successfully updated."
+      respond_to do |format|
+        format.html { redirect_to accounts_path, notice: "Account was successfully updated." }
+        format.turbo_stream { flash.now[:notice] = "Account was successfully updated." }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
@@ -45,10 +48,16 @@ class AccountsController < ApplicationController
     @account.destroy
     respond_to do |format|
       format.html { redirect_to accounts_path, notice: "Account was successfully destroyed." }
-      format.turbo_stream
+      format.turbo_stream { flash.now[:notice] = "Account was successfully destroyed." }
     end
   rescue ActiveRecord::InvalidForeignKey
-    redirect_to accounts_path, alert: "Cannot destroy account because it has dependent records."
+    respond_to do |format|
+      format.html { redirect_to accounts_path, notice: "Cannot destroy account because it has dependent records." }
+      format.turbo_stream do
+        flash.now[:alert] = "Cannot destroy account because it has dependent records."
+        render turbo_stream: turbo_stream.prepend("flash", partial: "layouts/flash")
+      end
+    end
   end
 
   private
